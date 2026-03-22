@@ -300,14 +300,25 @@ def transform_cdc_table(spark, topic, schema, table_name, id_col="id"):
     else:
         # MERGE: update kalo id match, insert kalo nggak ada
         if upsert_count > 0:
+            # Hitung existing rows buat bandingin setelah merge
             silver_table = DeltaTable.forPath(spark, silver_path)
+            before_count = silver_table.toDF().count()
+
             silver_table.alias("target").merge(
                 upserts.alias("source"),
                 f"target.{id_col} = source.{id_col}"
             ).whenMatchedUpdateAll() \
              .whenNotMatchedInsertAll() \
              .execute()
-            print(f"  → {upsert_count} rows merged to silver/{table_name}")
+
+            after_count = DeltaTable.forPath(spark, silver_path).toDF().count()
+            new_rows = after_count - before_count
+            updated_rows = upsert_count - new_rows
+
+            if new_rows > 0 or updated_rows > 0:
+                print(f"  → silver/{table_name}: {new_rows} inserted, {updated_rows} updated")
+            else:
+                print(f"  → silver/{table_name}: no changes (all {upsert_count} rows already up to date)")
 
         # DELETE: hapus row yang di-delete di source
         if delete_count > 0:
