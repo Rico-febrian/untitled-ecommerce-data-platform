@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: silver
+    description: "Silver layer tables dari MinIO (Delta Lake)"
+    meta:
+      external_location: "delta_scan('s3://silver/{name}')"
+    tables:
+      - name: users
+      - name: products
+      - name: orders
+      - name: order_items
+      - name: payments
+      - name: clickstream

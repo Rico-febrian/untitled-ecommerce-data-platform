@@ -1,0 +1,191 @@
+[0m20:16:07.421441 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x77be698ce410>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x77be688bd330>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x77be688bd2d0>]}
+
+
+============================== 20:16:07.425202 | 01b85358-353a-4734-aebb-404e8059b4b3 ==============================
+[0m20:16:07.425202 [info ] [MainThread]: Running with dbt=1.9.0-b2
+[0m20:16:07.425748 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/ricofebrian/.dbt', 'debug': 'False', 'version_check': 'True', 'log_path': 'logs', 'warn_error': 'None', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'invocation_command': 'dbt init gold_layer', 'introspect': 'True', 'log_format': 'default', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m20:16:07.450952 [debug] [MainThread]: Starter project path: /home/ricofebrian/.local/lib/python3.10/site-packages/dbt/include/starter_project
+[0m20:16:07.460195 [info ] [MainThread]: 
+Your new dbt project "gold_layer" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m20:16:07.460864 [info ] [MainThread]: Setting up your profile.
+[0m20:21:32.438647 [error] [MainThread]: Encountered an error:
+
+[0m20:21:32.444662 [error] [MainThread]: Traceback (most recent call last):
+  File "/home/ricofebrian/.local/lib/python3.10/site-packages/dbt/cli/requires.py", line 153, in wrapper
+    result, success = func(*args, **kwargs)
+  File "/home/ricofebrian/.local/lib/python3.10/site-packages/dbt/cli/requires.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/ricofebrian/.local/lib/python3.10/site-packages/dbt/cli/main.py", line 477, in init
+    results = task.run()
+  File "/home/ricofebrian/.local/lib/python3.10/site-packages/dbt/task/init.py", line 346, in run
+    self.setup_profile(profile_name)
+  File "/home/ricofebrian/.local/lib/python3.10/site-packages/dbt/task/init.py", line 261, in setup_profile
+    adapter = self.ask_for_adapter_choice()
+  File "/home/ricofebrian/.local/lib/python3.10/site-packages/dbt/task/init.py", line 242, in ask_for_adapter_choice
+    numeric_choice = click.prompt(prompt_msg, type=click.INT)
+  File "/home/ricofebrian/.local/lib/python3.10/site-packages/click/termui.py", line 164, in prompt
+    value = prompt_func(prompt)
+  File "/home/ricofebrian/.local/lib/python3.10/site-packages/click/termui.py", line 147, in prompt_func
+    raise Abort() from None
+click.exceptions.Abort
+
+[0m20:21:32.448044 [debug] [MainThread]: Resource report: {"command_name": "init", "command_wall_clock_time": 331.8759, "process_user_time": 1.144282, "process_kernel_time": 0.209785, "process_mem_max_rss": "92228", "process_in_blocks": "55512", "process_out_blocks": "72", "command_success": false}
+[0m20:21:32.449126 [debug] [MainThread]: Command `dbt init` failed at 20:21:32.448966 after 331.88 seconds
+[0m20:21:32.450319 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x77be698ce410>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x77be68f78d60>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x77be68a63d60>]}
+[0m20:21:32.451159 [debug] [MainThread]: Flushing usage events
+[0m20:21:38.911261 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7185b0d7f4a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7185b0e76390>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7185b0d7faa0>]}
+
+
+============================== 20:21:38.981814 | 38158911-990d-4557-8c10-3f5cd8df0fc9 ==============================
+[0m20:21:38.981814 [info ] [MainThread]: Running with dbt=1.11.7
+[0m20:21:38.982604 [debug] [MainThread]: running dbt with arguments {'use_colors': 'True', 'send_anonymous_usage_stats': 'True', 'debug': 'False', 'version_check': 'True', 'indirect_selection': 'eager', 'cache_selected_only': 'False', 'use_experimental_parser': 'False', 'invocation_command': 'dbt init gold_layer', 'log_format': 'default', 'introspect': 'True', 'printer_width': '80', 'partial_parse': 'True', 'warn_error': 'None', 'static_parser': 'True', 'profiles_dir': '/home/ricofebrian/.dbt', 'empty': 'None', 'log_cache_events': 'False', 'target_path': 'None', 'log_path': 'logs', 'fail_fast': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'no_print': 'None', 'quiet': 'False', 'write_json': 'True'}
+[0m20:21:39.030743 [info ] [MainThread]: A project called gold_layer already exists here.
+[0m20:21:39.031606 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 0.17546736, "process_in_blocks": "56", "process_kernel_time": 0.179302, "process_mem_max_rss": "121704", "process_out_blocks": "1408", "process_user_time": 1.239527}
+[0m20:21:39.032085 [debug] [MainThread]: Command `dbt init` succeeded at 20:21:39.031974 after 0.18 seconds
+[0m20:21:39.032496 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7185b0632b10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7185b0633170>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7185b0d7f4a0>]}
+[0m20:21:39.032907 [debug] [MainThread]: Flushing usage events
+[0m20:21:41.103046 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m20:21:54.753073 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x789d500ef080>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x789d4d6bd790>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x789d4d6bd280>]}
+
+
+============================== 20:21:54.755781 | 1196eded-a0c4-4cf2-b96d-f80e26a95141 ==============================
+[0m20:21:54.755781 [info ] [MainThread]: Running with dbt=1.11.7
+[0m20:21:54.756353 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'quiet': 'False', 'introspect': 'True', 'printer_width': '80', 'warn_error': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'static_parser': 'True', 'log_cache_events': 'False', 'debug': 'False', 'profiles_dir': '/home/ricofebrian/.dbt', 'indirect_selection': 'eager', 'fail_fast': 'False', 'empty': 'None', 'log_path': 'logs', 'send_anonymous_usage_stats': 'True', 'use_colors': 'True', 'log_format': 'default', 'write_json': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'invocation_command': 'dbt init gold_layer', 'cache_selected_only': 'False', 'partial_parse': 'True', 'target_path': 'None'}
+[0m20:21:54.765762 [debug] [MainThread]: Starter project path: /home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt/include/starter_project
+[0m20:21:54.771739 [info ] [MainThread]: 
+Your new dbt project "gold_layer" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m20:21:54.772772 [info ] [MainThread]: Setting up your profile.
+[0m20:22:01.013223 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 6.3121004, "process_in_blocks": "128", "process_kernel_time": 0.117235, "process_mem_max_rss": "133128", "process_out_blocks": "80", "process_user_time": 1.227062}
+[0m20:22:01.013729 [debug] [MainThread]: Command `dbt init` succeeded at 20:22:01.013633 after 6.31 seconds
+[0m20:22:01.014245 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x789d4d5e44a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x789d4dd3de20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x789d4dd3c260>]}
+[0m20:22:01.014656 [debug] [MainThread]: Flushing usage events
+[0m20:22:02.821626 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m20:25:15.836311 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff00f26b2c0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff010c55760>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff00edd5580>]}
+
+
+============================== 20:25:15.839291 | d3090925-a175-4dc9-85ff-97ba78d4988d ==============================
+[0m20:25:15.839291 [info ] [MainThread]: Running with dbt=1.11.7
+[0m20:25:15.839911 [debug] [MainThread]: running dbt with arguments {'introspect': 'True', 'invocation_command': 'dbt debug', 'target_path': 'None', 'indirect_selection': 'eager', 'log_format': 'default', 'write_json': 'True', 'use_colors': 'True', 'profiles_dir': '/home/ricofebrian/.dbt', 'printer_width': '80', 'debug': 'False', 'log_cache_events': 'False', 'quiet': 'False', 'version_check': 'True', 'log_path': 'logs', 'cache_selected_only': 'False', 'empty': 'None', 'partial_parse': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'no_print': 'None', 'use_experimental_parser': 'False', 'send_anonymous_usage_stats': 'True', 'fail_fast': 'False', 'static_parser': 'True', 'warn_error': 'None'}
+[0m20:25:15.854472 [info ] [MainThread]: dbt version: 1.11.7
+[0m20:25:15.855529 [info ] [MainThread]: python version: 3.12.13
+[0m20:25:15.856333 [info ] [MainThread]: python path: /home/ricofebrian/ecommerce-data-platform/.venv/bin/python3
+[0m20:25:15.857069 [info ] [MainThread]: os info: Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.35
+[0m20:25:15.964376 [info ] [MainThread]: Using profiles dir at /home/ricofebrian/.dbt
+[0m20:25:15.964825 [info ] [MainThread]: Using profiles.yml file at /home/ricofebrian/.dbt/profiles.yml
+[0m20:25:15.965180 [info ] [MainThread]: Using dbt_project.yml file at /home/ricofebrian/ecommerce-data-platform/dbt_project.yml
+[0m20:25:15.967468 [info ] [MainThread]: adapter type: duckdb
+[0m20:25:15.967836 [info ] [MainThread]: adapter version: 1.10.1
+[0m20:25:15.968227 [info ] [MainThread]: Configuration:
+[0m20:25:15.968576 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m20:25:15.968915 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m20:25:15.969266 [info ] [MainThread]: Required dependencies:
+[0m20:25:15.969626 [debug] [MainThread]: Executing "git --help"
+[0m20:25:15.971982 [debug] [MainThread]: STDOUT: "b"usage: git [--version] [--help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           [--super-prefix=<path>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m20:25:15.972430 [debug] [MainThread]: STDERR: "b''"
+[0m20:25:15.972784 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m20:25:15.973422 [info ] [MainThread]: Connection:
+[0m20:25:15.973822 [info ] [MainThread]:   database: dev
+[0m20:25:15.974343 [info ] [MainThread]:   schema: main
+[0m20:25:15.974811 [info ] [MainThread]:   path: /home/ricofebrian/ecommerce-data-platform/dev.duckdb
+[0m20:25:15.975253 [info ] [MainThread]:   config_options: None
+[0m20:25:15.975697 [info ] [MainThread]:   extensions: ['httpfs', 'delta']
+[0m20:25:15.976298 [info ] [MainThread]:   settings: {'s3_region': 'us-east-1', 's3_endpoint': 'localhost:9000', 's3_access_key_id': 'minioadmin', 's3_secret_access_key': 'minioadmin123', 's3_use_ssl': False, 's3_url_style': 'path'}
+[0m20:25:15.976754 [info ] [MainThread]:   external_root: .
+[0m20:25:15.977160 [info ] [MainThread]:   use_credential_provider: None
+[0m20:25:15.977533 [info ] [MainThread]:   attach: None
+[0m20:25:15.977918 [info ] [MainThread]:   filesystems: None
+[0m20:25:15.978248 [info ] [MainThread]:   remote: None
+[0m20:25:15.978577 [info ] [MainThread]:   plugins: None
+[0m20:25:15.978906 [info ] [MainThread]:   disable_transactions: False
+[0m20:25:15.979411 [info ] [MainThread]: Registered adapter: duckdb=1.10.1
+[0m20:25:16.053359 [debug] [MainThread]: Acquiring new duckdb connection 'debug'
+[0m20:25:16.090397 [debug] [MainThread]: Using duckdb connection "debug"
+[0m20:25:16.090795 [debug] [MainThread]: On debug: select 1 as id
+[0m20:25:16.091108 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m20:25:31.311185 [error] [MainThread]: Encountered an error:
+
+[0m20:25:31.313322 [error] [MainThread]: Traceback (most recent call last):
+  File "/home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt/cli/requires.py", line 182, in wrapper
+    result, success = func(*args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt/cli/requires.py", line 128, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt/cli/main.py", line 420, in debug
+    results = task.run()
+              ^^^^^^^^^^
+  File "/home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt/task/debug.py", line 144, in run
+    connection_status = self.test_connection()
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt/task/debug.py", line 465, in test_connection
+    connection_result = self.attempt_connection(self.profile)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt/task/debug.py", line 443, in attempt_connection
+    adapter.debug_query()
+  File "/home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt/adapters/duckdb/impl.py", line 128, in debug_query
+    self.execute("select 1 as id")
+  File "/home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt_common/record.py", line 538, in record_replay_wrapper
+    return func_to_record(*call_args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt/adapters/base/impl.py", line 471, in execute
+    return self.connections.execute(sql=sql, auto_begin=auto_begin, fetch=fetch, limit=limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt/adapters/duckdb/connections.py", line 130, in execute
+    return super().execute(sql, auto_begin, fetch, limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt/adapters/sql/connections.py", line 219, in execute
+    _, cursor = self.add_query(sql, auto_begin)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt/adapters/sql/connections.py", line 147, in add_query
+    cursor = connection.handle.cursor()
+             ^^^^^^^^^^^^^^^^^
+  File "/home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt/adapters/contracts/connection.py", line 96, in handle
+    self._handle.resolve(self)
+  File "/home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt/adapters/contracts/connection.py", line 120, in resolve
+    return self.opener(connection)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt/adapters/duckdb/connections.py", line 53, in open
+    connection.handle = cls._ENV.handle()
+                        ^^^^^^^^^^^^^^^^^
+  File "/home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt/adapters/duckdb/environments/local.py", line 75, in handle
+    self.conn = self.initialize_db(self.creds, self._plugins)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ricofebrian/ecommerce-data-platform/.venv/lib/python3.12/site-packages/dbt/adapters/duckdb/environments/__init__.py", line 165, in initialize_db
+    conn.install_extension(extension)
+KeyboardInterrupt
+
+[0m20:25:31.314242 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": false, "command_wall_clock_time": 16.181343, "process_in_blocks": "24", "process_kernel_time": 0.497677, "process_mem_max_rss": "351556", "process_out_blocks": "195664", "process_user_time": 13.899969}
+[0m20:25:31.314689 [debug] [MainThread]: Command `dbt debug` failed at 20:25:31.314585 after 16.18 seconds
+[0m20:25:31.315036 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m20:25:31.315403 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff00f26b2c0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff00e2dfcb0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff00e198dd0>]}
+[0m20:25:31.315805 [debug] [MainThread]: Flushing usage events
+[0m20:25:32.830335 [debug] [MainThread]: An error was encountered while trying to flush usage events
