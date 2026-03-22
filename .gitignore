@@ -1,2 +1,4 @@
 .env
 docs/PHASE1_QNA.md
+*__pycache__
+gold_layer/profiles.yml
