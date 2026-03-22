@@ -77,6 +77,49 @@ services:
       timeout: 5s
       retries: 5
 
+  # === PROCESSING ===
+  spark-master:
+    build: ./docker/spark
+    container_name: ecommerce-spark-master
+    environment:
+      - SPARK_MODE=master
+      - MINIO_ENDPOINT=http://minio:9000
+      - MINIO_ACCESS_KEY=${MINIO_ROOT_USER}
+      - MINIO_SECRET_KEY=${MINIO_ROOT_PASSWORD}
+    ports:
+      - "7077:7077"  # Spark master port (worker connect ke sini)
+      - "4040:4040"  # Spark job UI (aktif waktu ada job jalan)
+      - "8081:8080"  # Spark master UI
+    volumes:
+      - ./src:/opt/spark-jobs  # Mount source code biar Spark bisa akses job files
+
+  spark-worker:
+    build: ./docker/spark
+    container_name: ecommerce-spark-worker
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+    depends_on:
+      - spark-master
+
+  # === CDC ===
+  kafka-connect:
+    image: debezium/connect:2.6
+    container_name: ecommerce-kafka-connect
+    environment:
+      GROUP_ID: 1
+      BOOTSTRAP_SERVERS: redpanda:9092
+      CONFIG_STORAGE_TOPIC: _connect-configs
+      OFFSET_STORAGE_TOPIC: _connect-offsets
+      STATUS_STORAGE_TOPIC: _connect-status
+    ports:
+      - "8083:8083"
+    depends_on:
+      redpanda:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
 volumes:
   postgres_data:
   redpanda_data:
