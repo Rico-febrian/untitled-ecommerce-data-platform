@@ -73,11 +73,14 @@ def stream_topic_to_bronze(spark, topic, bronze_path):
     # Tulis ke MinIO sebagai Delta Lake
     # checkpointLocation = Spark nyimpen progress streaming di sini
     #   (mirip offset di Kafka — biar kalo restart, lanjut bukan ulang)
+    # trigger(availableNow=True) = proses semua data yang ada, lalu stop otomatis
+    #   (batch-friendly buat Airflow, tapi tetep pake streaming engine)
     query = (
         df_transformed.writeStream
         .format("delta")
         .outputMode("append")  # Append only, nggak overwrite data lama
         .option("checkpointLocation", f"s3a://bronze/_checkpoints/{topic}")
+        .trigger(availableNow=True)
         .start(f"s3a://bronze/{topic}")
     )
 
@@ -104,7 +107,7 @@ def main():
         q = stream_topic_to_bronze(spark, topic, f"s3a://bronze/{topic}")
         queries.append(q)
 
-    # Tunggu semua streaming query jalan terus (sampai di-stop manual)
+    # Tunggu semua streaming query selesai (stop otomatis setelah data habis)
     for q in queries:
         q.awaitTermination()
 
