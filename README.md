@@ -1,6 +1,12 @@
 # E-Commerce Real-Time Data Platform
 
-End-to-end data pipeline that captures changes from a transactional database using CDC, streams them through a Bronze, Silver, and Gold lakehouse architecture, and serves analytics on a Metabase dashboard. Fully orchestrated with Airflow and running entirely in Docker.
+Hello, welcome to my learning logs!
+
+It’s been a while since my last update.
+
+In this project, I built an end-to-end data pipeline that captures changes from a transactional database using CDC, streams the data through a Bronze, Silver, and Gold lakehouse architecture, and delivers analytics via a Metabase dashboard. The entire workflow is orchestrated with Airflow and runs fully in Docker.
+
+I hope you find something useful and can learn from this repository!
 
 &nbsp;
 
@@ -245,7 +251,9 @@ Once connected, you can query tables like `fact_orders`, `dim_products`, and `di
 
 ## Acknowledgements
 
-Thank you for checking out this project. This was built as a learning project to explore how modern data engineering tools work together. If you have any questions, feedback, or suggestions, feel free to reach out.
+Alright, that’s all. Thank you for checking out this project.
+
+This project was built as part of my learning process to understand how modern data engineering tools work together. If you have any questions or feedback, feel free to reach out.
 
 You can connect with me on:
 
