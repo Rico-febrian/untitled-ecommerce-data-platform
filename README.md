@@ -33,23 +33,27 @@ End-to-end data pipeline that captures changes from a transactional database usi
 
 Hello, welcome to my learning logs!
 
-It's been a while since my last update.
+In this project, I explored how to build an end-to-end data pipeline that captures changes from a transactional database using CDC (Change Data Capture), and processes them through a lakehouse architecture (Bronze, Silver, Gold).
 
-In this project, I built an end-to-end data pipeline that captures changes from a transactional database using CDC, streams the data through a Bronze, Silver, and Gold lakehouse architecture, and delivers analytics via a Metabase dashboard. The entire workflow is orchestrated with Airflow and runs fully in Docker.
+The pipeline streams data in near real-time, transforms it step by step, and delivers it for analytics through a Metabase dashboard. Everything is orchestrated with Airflow and runs fully in Docker.
 
-I hope you find something useful and can learn from this repository!
+I built this project to better understand how modern data platforms handle streaming data and incremental processing.
 
 ### Pipeline Flow
-- Capture database changes in real time using Debezium CDC
-- Stream events through Redpanda (Kafka-compatible broker)
-- Store raw data in MinIO as Delta Lake tables (Bronze)
-- Clean and decode data with Spark (Silver)
-- Transform into a star schema using dbt-DuckDB (Gold)
+
+Here’s how the data moves through the system:
+
+- Capture database changes in real time using Debezium (CDC)  
+- Stream events through Redpanda (Kafka-compatible broker)  
+- Store raw data in MinIO as Delta Lake tables (**Bronze layer**)  
+- Clean and decode data using Spark (**Silver layer**)  
+- Transform into a star schema using dbt + DuckDB (**Gold layer**)  
 
 ### Analytics & Monitoring
-- Visualize data in Metabase dashboard
-- Schedule and monitor pipelines using Airflow
-- Validate data quality with dbt tests
+
+- Visualize data in a Metabase dashboard  
+- Schedule and monitor pipelines using Airflow  
+- Validate data quality using dbt tests  
 
 &nbsp;
 
@@ -73,33 +77,75 @@ I hope you find something useful and can learn from this repository!
 
 ## How It Works
 
-This project uses simulated data. There is no real e-commerce business behind it. Two Python scripts generate everything.
+**This project uses fully simulated data**. There is no real e-commerce system behind it.  
+All data is generated using two Python scripts.
 
-### Data Sources (both simulated)
+### Data Sources
 
-**`seed.py`** generates a one-time batch of e-commerce data into PostgreSQL: 200 users, 50 products, and 500 orders with items and payments. Debezium then watches the database's internal change log (WAL) and streams every row as a CDC event to Redpanda. Any future INSERT, UPDATE, or DELETE in this database is also captured automatically.
+- **`seed.py` (batch data)**, generates an initial dataset in PostgreSQL:
+ 
+  - 200 users  
+  - 50 products  
+  - 500 orders (including items and payments)  
 
-**`producer.py`** continuously generates clickstream events (page views, add to cart, checkout) and sends them directly to Redpanda. This powers the conversion funnel analysis on the dashboard. If you don't run this, the pipeline still works but clickstream charts will be empty.
+  Debezium monitors the database’s write-ahead log (WAL) and streams every change as a CDC event to Redpanda. 
+  
+  Any future `INSERT`, `UPDATE`, or `DELETE` is captured automatically.
+
+- **`producer.py` (streaming events)**: Continuously generates clickstream events:
+
+  - page views  
+  - add to cart  
+  - checkout  
+
+  These events are sent directly to Redpanda and power the conversion funnel analysis in the dashboard.
+
+> [!NOTE]
+> **If this script is not running, the pipeline still works, but clickstream charts will be empty.**
+ 
+---
 
 ### Processing Layers
 
-**Bronze (raw)** — Spark reads all events from Redpanda and stores them as-is in MinIO as Delta Lake tables. No transformation, just a faithful archive. If anything breaks downstream, you can always reprocess from here.
+The pipeline follows a lakehouse pattern: **Bronze → Silver → Gold**
 
-**Silver (cleaned)** — Spark reads from Bronze, decodes the Debezium format (which encodes timestamps and decimals in non-obvious ways), and applies upserts so the Silver tables mirror the current state of the source database.
+- **Bronze (raw)**  
+  - Spark reads all events from Redpanda  
+  - Stores them as-is in MinIO as Delta Lake tables  
+  - No transformation, acts as a full data archive  
 
-**Gold (analytics-ready)** — dbt reads from Silver and builds a star schema in DuckDB:
+  If anything breaks downstream, data can always be reprocessed from this layer.
+
+- **Silver (cleaned)**  
+  - Spark reads from Bronze  
+  - Decodes Debezium’s format (e.g. timestamps, decimals)  
+  - Applies upserts to reflect the latest state of the source database  
+
+  At this stage, tables behave like a clean, queryable version of the source system.
+
+- **Gold (analytics-ready)**
+
+dbt transforms the Silver layer into a star schema in DuckDB:
 
 | Table | Description |
-|---|---|
-| **`dim_users`** | user profiles with city |
-| **`dim_products`** | product catalog with category and price |
-| **`dim_date`** | generated date spine (2024–2026) |
-| **`fact_orders`** | one row per product per order, with quantity, unit price, and line total |
-| **`fact_clickstream`** | one row per event (page view, add to cart, checkout) |
+|------|-------------|
+| `dim_users` | User profiles with city |
+| `dim_products` | Product catalog with category and price |
+| `dim_date` | Generated date spine (2024–2026) |
+| `fact_orders` | One row per product per order (quantity, price, total) |
+| `fact_clickstream` | One row per event (page view, add to cart, checkout) |
 
-Airflow orchestrates the full pipeline in sequence: Bronze, Silver, Gold, then data quality tests at the end.
+---
 
-&nbsp;
+### Orchestration
+
+Airflow orchestrates the pipeline in sequence:
+
+**Bronze → Silver → Gold → Data quality tests**
+
+This ensures data is processed step by step, with validation at the end of each run.
+
+---
 
 ## Project Structure
 
