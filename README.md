@@ -23,6 +23,7 @@ End-to-end data pipeline that captures changes from a transactional database usi
 ## Table of Contents
 
 - [Overview](#overview)
+- [Dashboard Preview](#dashboard-preview)
 - [Tech Stack](#tech-stack)
 - [How It Works](#how-it-works)
 - [Project Structure](#project-structure)
@@ -54,6 +55,12 @@ Here’s how the data moves through the system:
 - Visualize data in a Metabase dashboard  
 - Schedule and monitor pipelines using Airflow  
 - Validate data quality using dbt tests  
+
+&nbsp;
+
+## Dashboard Preview
+
+![Dashboard](images/Dashboard.png)
 
 &nbsp;
 
