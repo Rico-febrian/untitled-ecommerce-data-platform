@@ -212,6 +212,7 @@ services:
     volumes:
       # Mount DuckDB file (read-only buat Metabase)
       - ./dev.duckdb:/data/dev.duckdb:ro
+      - metabase_data:/metabase.db
 
 volumes:
   postgres_data:
@@ -219,3 +220,4 @@ volumes:
   minio_data:
   airflow_postgres_data:
   airflow_logs:
+  metabase_data:
