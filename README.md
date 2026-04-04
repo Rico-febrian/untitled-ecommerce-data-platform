@@ -1,20 +1,73 @@
-# E-Commerce Real-Time Data Platform
+<p align="center">
+  <img width="100%" src="/images/E-commerce%20Data%20Platform%20Architecture.png" alt="E-Commerce Data Platform Architecture">
+</p>
+
+<h1 align="center">
+    <strong>E-Commerce Real-Time Data Platform</strong>
+</h1>
+
+<p align="center">
+End-to-end data pipeline that captures changes from a transactional database using CDC, streams them through a lakehouse architecture, and serves analytics via a Metabase dashboard
+</p>
+
+
+<p align="center">
+<img src="https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white" alt="Python">
+<img src="https://img.shields.io/badge/Spark-3.5.5-E25A1C?logo=apachespark&logoColor=white" alt="Spark">
+<img src="https://img.shields.io/badge/Airflow-2.10.4-017CEE?logo=apacheairflow&logoColor=white" alt="Airflow">
+<img src="https://img.shields.io/badge/dbt-DuckDB-FF694B?logo=dbt&logoColor=white" alt="dbt">
+<img src="https://img.shields.io/badge/Delta_Lake-3.2.0-003366?logo=delta&logoColor=white" alt="Delta Lake">
+<img src="https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white" alt="Docker">
+</p>
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Tech Stack](#tech-stack)
+- [How It Works](#how-it-works)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Services](#services)
+
+## Overview
 
 Hello, welcome to my learning logs!
 
-It’s been a while since my last update.
+It's been a while since my last update.
 
 In this project, I built an end-to-end data pipeline that captures changes from a transactional database using CDC, streams the data through a Bronze, Silver, and Gold lakehouse architecture, and delivers analytics via a Metabase dashboard. The entire workflow is orchestrated with Airflow and runs fully in Docker.
 
 I hope you find something useful and can learn from this repository!
 
+### Pipeline Flow
+- Capture database changes in real time using Debezium CDC
+- Stream events through Redpanda (Kafka-compatible broker)
+- Store raw data in MinIO as Delta Lake tables (Bronze)
+- Clean and decode data with Spark (Silver)
+- Transform into a star schema using dbt-DuckDB (Gold)
+
+### Analytics & Monitoring
+- Visualize data in Metabase dashboard
+- Schedule and monitor pipelines using Airflow
+- Validate data quality with dbt tests
+
 &nbsp;
 
-## Architecture
+## Tech Stack
 
-![E-commerce Data Platform Architecture](images/E-commerce%20Data%20Platform%20Architecture.png)
-
-<!-- TODO: Add 1-2 dashboard screenshots here -->
+| Layer | Tool |
+|---|---|
+| Source Database | PostgreSQL 16 |
+| Change Data Capture | Debezium 2.6 |
+| Message Broker | Redpanda v24.1.1 |
+| Object Storage | MinIO |
+| Processing | Apache Spark 3.5.5 |
+| Table Format | Delta Lake 3.2.0 |
+| Transformation | dbt-DuckDB |
+| Analytical DB | DuckDB |
+| Dashboard | Metabase |
+| Orchestration | Apache Airflow 2.10.4 |
+| Containerization | Docker Compose |
 
 &nbsp;
 
@@ -34,27 +87,17 @@ This project uses simulated data. There is no real e-commerce business behind it
 
 **Silver (cleaned)** — Spark reads from Bronze, decodes the Debezium format (which encodes timestamps and decimals in non-obvious ways), and applies upserts so the Silver tables mirror the current state of the source database.
 
-**Gold (analytics-ready)** — dbt reads from Silver and builds a star schema in DuckDB with dimension tables (users, products, dates) and fact tables (orders, clickstream). This is what the dashboard queries.
+**Gold (analytics-ready)** — dbt reads from Silver and builds a star schema in DuckDB:
+
+| Table | Description |
+|---|---|
+| **`dim_users`** | user profiles with city |
+| **`dim_products`** | product catalog with category and price |
+| **`dim_date`** | generated date spine (2024–2026) |
+| **`fact_orders`** | one row per product per order, with quantity, unit price, and line total |
+| **`fact_clickstream`** | one row per event (page view, add to cart, checkout) |
 
 Airflow orchestrates the full pipeline in sequence: Bronze, Silver, Gold, then data quality tests at the end.
-
-&nbsp;
-
-## Tech Stack
-
-| Layer | Tool |
-|-------|------|
-| Source Database | PostgreSQL 16 |
-| Change Data Capture | Debezium 2.6 |
-| Message Broker | Redpanda v24.1.1 |
-| Object Storage | MinIO |
-| Processing | Apache Spark 3.5.5 |
-| Table Format | Delta Lake 3.2.0 |
-| Transformation | dbt-DuckDB |
-| Analytical DB | DuckDB |
-| Dashboard | Metabase |
-| Orchestration | Apache Airflow 2.10.4 |
-| Containerization | Docker Compose |
 
 &nbsp;
 
@@ -107,7 +150,10 @@ git clone https://github.com/<your-username>/ecommerce-data-platform.git
 cd ecommerce-data-platform
 ```
 
-Create a `.env` file in the project root. All services read credentials from this file so nothing is hardcoded in the code:
+Create a `.env` file in the project root. All services read credentials from this file.
+
+<details>
+<summary>Example <code>.env</code></summary>
 
 ```env
 POSTGRES_USER=ecommerce
@@ -130,6 +176,8 @@ AIRFLOW_POSTGRES_DB=airflow
 AIRFLOW_ADMIN_USER=admin
 AIRFLOW_ADMIN_PASSWORD=admin123
 ```
+
+</details>
 
 &nbsp;
 
@@ -227,9 +275,11 @@ Open [Metabase](http://localhost:3000). On first launch it will ask you to creat
 
 After setup, go to **Settings > Admin > Databases > Add Database**:
 
-- Database type: **DuckDB**
-- Database file: `/data/dev.duckdb` (this is the path inside the container, not on your machine)
-- Toggle **read-only mode** on so it doesn't conflict with dbt writes
+| Setting | Value |
+|---|---|
+| Database type | **DuckDB** |
+| Database file | `/data/dev.duckdb` (path inside the container, not on your machine) |
+| Read-only mode | **On** (so it doesn't conflict with dbt writes) |
 
 Once connected, you can query tables like `fact_orders`, `dim_products`, and `dim_users` directly, or build your own dashboard.
 
@@ -238,7 +288,7 @@ Once connected, you can query tables like `fact_orders`, `dim_products`, and `di
 ## Services
 
 | Service | URL |
-|---------|-----|
+|---|---|
 | PostgreSQL | `localhost:5433` |
 | Redpanda Console | [localhost:8080](http://localhost:8080) |
 | MinIO Console | [localhost:9001](http://localhost:9001) |
@@ -251,9 +301,7 @@ Once connected, you can query tables like `fact_orders`, `dim_products`, and `di
 
 ## Acknowledgements
 
-Alright, that’s all. Thank you for checking out this project.
-
-This project was built as part of my learning process to understand how modern data engineering tools work together. If you have any questions or feedback, feel free to reach out.
+Thank you for checking out this project. If you have any questions or feedback, feel free to reach out.
 
 You can connect with me on:
 
